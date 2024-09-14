@@ -59,16 +59,15 @@ window.onload = function() {
 };
 
 
-//INTERAÇÃO DA SESSÃO SOBRE.
+// INTERAÇÃO DA SESSÃO SOBRE
 document.addEventListener('DOMContentLoaded', function() {
     const sobreSection = document.getElementById('sobre');
     const btnAprofundar = document.querySelector('.btn-aprofundar');
     const btnResumo = document.querySelector('.btn-resumo');
-    const detalhes = document.getElementById('detalhes');
-    const cards = document.querySelectorAll('.about-item');
+    const items = document.querySelectorAll('.carousel-item');
     let currentIndex = 0;
 
-    // Expandir sessão "sobre"
+    // Expandir sessão "sobre" e rolar suavemente para os detalhes
     btnAprofundar.addEventListener('click', function() {
         sobreSection.classList.add('expanded');
         // Rolagem suave para os detalhes
@@ -84,29 +83,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Navegar entre os cards
-    document.querySelector('.nav-prev').addEventListener('click', function() {
-        showCard(currentIndex - 1);
-    });
-
-    document.querySelector('.nav-next').addEventListener('click', function() {
-        showCard(currentIndex + 1);
-    });
-
-    function showCard(index) {
-        if (index < 0) {
-            currentIndex = cards.length - 1;
-        } else if (index >= cards.length) {
-            currentIndex = 0;
-        } else {
-            currentIndex = index;
-        }
-
-        cards.forEach((card, i) => {
-            card.style.transform = `translateX(${(i - currentIndex) * 100}%)`;
+    // Atualizar o carrossel
+    function updateCarousel() {
+        const offset = -currentIndex * 100;
+        document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
+        items.forEach((item, index) => {
+            item.classList.remove('selected');
+            if (index === currentIndex) {
+                item.classList.add('selected');
+            }
         });
     }
 
-    // Inicializa os cards na posição correta
-    showCard(currentIndex);
+    // Navegar entre os cards
+    function showNextItem() {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+    }
+
+    // Inicializa o carrossel
+    setInterval(showNextItem, 3000);
 });

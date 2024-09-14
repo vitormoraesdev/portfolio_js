@@ -123,10 +123,10 @@ body {
         16px 16px 32px 4px #0000003f;
 }
 
-/*SESSÃO SOBRE*/
-
+/* SESSÃO SOBRE */
 #sobre {
     background-image: url('../assets/photos/image_sobre1.jpeg');
+    border-image: fill 0 linear-gradient(#0003, #000);
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
@@ -201,6 +201,9 @@ body {
     margin-top: 40px;
     opacity: 0;
     transition: opacity 0.5s ease;
+    padding: 20px;
+    position: relative; /* Garante que o botão resumo fique visível */
+    height: 100vh;
 }
 
 #sobre.expanded #detalhes {
@@ -210,49 +213,67 @@ body {
     align-items: center;
 }
 
-.about-collection {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.about-item {
-    flex: 1 1 30%;
-    max-width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+/* Estilização do Carrossel */
+.carousel {
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.about-item figcaption {
-    padding: 15px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
+    position: relative;
+    width: 90%; /* Ajustado para ocupar uma boa parte da largura */
+    margin: auto;
     text-align: center;
 }
 
-.about-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-
-/* Botões de Navegação dos Cards */
-.navigation-buttons {
+.carousel-inner {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    transition: transform 0.5s ease-in-out;
 }
 
-.nav-btn {
+.carousel-item {
+    min-width: 30%; /* Ajuste para garantir que os cards laterais sejam visíveis */
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0.5; /* Card não selecionado */
+    cursor: pointer;
+    backdrop-filter: blur(10px); /* Efeito de vidro */
+    background: rgba(255, 255, 255, 0.3); /* Cor de fundo com opacidade */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-item.selected {
+    opacity: 1; /* Card selecionado */
+    transform: scale(1.1); /* Aumenta o tamanho do card selecionado */
+    z-index: 1; /* Eleva o card selecionado acima dos outros */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra ao card selecionado */
+}
+
+.carousel-item img {
+    width: 60%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.carousel-text {
+    width: 40%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        width: 100%;
+    }
+
+    .carousel-text {
+        width: 100%;
+    }
+}
+
+/* Botão Resumo */
+.btn-resumo {
+    position: absolute;
+    bottom: 20px;
     background-color: var(--color-quarteary);
     color: var(--color-secondary);
     border: none;
@@ -260,8 +281,9 @@ body {
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    z-index: 2; /* Garante que o botão esteja acima de outros elementos */
 }
 
-.nav-btn:hover {
+.btn-resumo:hover {
     background-color: var(--color-primary);
 }
